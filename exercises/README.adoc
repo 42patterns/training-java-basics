@@ -1,0 +1,176 @@
+= Podstawy Javy - ćwiczenia
+
+Celem zadań będzie napisanie aplikacji która pobiera tłumaczenia słów zapisanych w pliku tekstowym, a następnie na nich operuje (wyświetla na ekranie, zapisuje do pliku itd). Wraz z rozwojem aplikacji (a zarazem poznawaniem kolejnych elementów platformy Java) w kolejnych ćwiczeniach będą dodawane kolejne funkcjonalności. 
+
+== Zadanie 1 - Stan początkowy
+
+System funkcję wysyła do użytkownika zapytanie o  kontynuowanie/ zakończenie pracy.
+
+Szkielet programu można przedstawić następująco:
+
+[source, java]
+----
+public class Application {
+
+	public static void main(String[] args) throws Exception {
+
+		//wyświetlenie powitania na ekranie
+		//zapytanie o wyjście z programu
+		//obsługa wciśniętego klawisza
+		//zakończenie działania programu
+
+	}
+}
+----
+
+.Dodatkowe informacje
+Należy wykorzystać klasy `System` oraz `Scanner`
+
+`System.out.println("tekst")` – wyświetla tekst.
+
+`Scanner scanner = new Scanner(System.in)` oraz `String line = scanner.nextLine()` - pobiera wartość wpisaną przez użytkownika i zapisuje ją w zmiennej `line`.
+
+`scanner.close()` - zamyka przetwarzany strumień wejściowy.
+
+<<<
+
+== Zadanie 2 - wprowadzenie linii poleceń w aplikacji
+
+W aplikacji z zadania pierwszego dodaj obsługę komend, tzn. wprowadź znak zachęty oraz umożliw wpisywanie komend; aby opuścić aplikację należy wydać komendę `exit`.
+
+Program docelowo ma odczytywać dane z pliku, dodaj więc komendę `read {nazwa_pliku}`. Dla tej komendy system powinien wyświetlić na ekran komunikat `Odczyt z pliku {nazwa_pliku}.`
+
+<<<
+
+== Zadanie 3 - operacje na ciągach znaków
+
+Program będzie miał możliwość odczytu plików w więcej niż w pojedynczym formacie. Początkowo będzie to zwykły plik tekstowy (TXT) ale docelowo będziemy wprowadzać kolejne formaty (XML, CSV, JSON). Niemniej, format tekstowy będzie formatem domyślnym.
+
+Dodatkowo zaimplementuj walidację; sprawdzenie poprawności nazwy pliku (liczby oraz litery oraz trzy znakowe rozszerzenie). Jeżeli wpisana nazwa pliku nie będzie posiadała rozszerzenia - należy użyć domyślnego rozszerzenie `.txt`. 
+
+<<<
+
+== Zadanie 4 - Odczyt z pliku źródłowego
+
+W tym zadaniu, do reguł walidacji dodaj kolejną: sprawdzenie istnienia pliku w podanej lokalizacji. 
+
+Jeżeli plik istnieję to odczytaj jego zawartość i wyświetl ją na ekran. 
+
+.Dodatkowe informacje
+Do operacji na plikach wykorzystaj klasę `File`, np. sprawdzenie czy plik istnieje poprzez
+
+[source,java]
+----
+File f = new File("{nazwa_pliku");
+f.exists();
+----
+
+<<<
+
+== Zadanie 5 - pobranie tłumaczenia dla wybranego słowa
+
+Po odczytaniu pliku i wyświetleniu zawartości na ekranie, wybierz słowo do przetłumaczenia wybierając komendę `translate {numer}`, gdzie numer to jest numer kolejnego słowa (np. `translate 3`).
+
+Tłumaczenia słowa pobieramy z serwisu http://www.dict.pl. 
+Wywołując adres URL `http://www.dict.pl/dict?words=&lang=PL&word={słowo_do_przetłumaczenia}` otrzymamy plik HTML z listą tłumaczeń zapisaną w formacie: słowo polskie, angielski odpowiednik szukanego słowa.
+
+.Dodatkowe informacje
+Aby ułatwić sobie pracę z listą słów plików, odczytując plik zapisz go w pamięci w tablicy (lub liście). 
+
+Do zewnętrznego systemu odwołujemy się poprzez klasę `URL` i odpowiednio obsługujemy otrzymany strumień danych. 
+
+<<<
+
+== Zadanie 6 - wyrażenia regularne
+
+W naszej aplikacji powinniśmy móc posługiwać się _wildcardami_ przy okazji podawania nazwy pliku. 
+Tzn, że powinna być możliwa komenda `read plik_*.txt` co spowodowałoby odczytanie zawartości wszystkich plików.
+
+.Dodatkowe informacje
+`Wildcard` to może być zarówno znak `?` - zastępujący pojedynczy znak w nazwie pliku, jak i `*` będący substytutem ciągu znaków o dowolnej długości. Wykorzystaj do tego właśnie wyrażenia regularne.
+
+W celu znalezienia odpowiednich plików, przefiltuj listę wszystkich plików w katalogu za pomocą odpowiedniego wyrażenia regularnego. 
+
+[source, java]
+----
+File dir = new File("katalog");
+File[] fileList = dir.listFile();
+----
+
+=== Zadanie 6a - wyłuskanie tłumaczeń z pliku HTML. 
+
+Z pobranego pliku HTML należy wyłuskać wszystkie kombinacje przetłumaczonego słowa. 
+Na stronie widzimy tabelkę ze słowami w formacie: słowo polskie, angielski odpowiednik szukanego słowa.
+
+Po wyodrębnieniu wszystkich słów należy je wyświetlić na ekranie w formacie:
+`polskie słowo - tłumaczenie`
+
+.Dodatkowe informacje
+Wyrażenie regularne wyłuskujące pojedyncze słowo z tabeli tłumaczeń może wyglądać następująco `.\*<a href="dict\?words?=(.*)&lang.*`
+
+<<<
+
+== Zadanie 7 - zapis do pliku CSV
+
+Pobrany zestaw tłumaczeń zapis do pliku CSV o następującej strukturze: wyrażenie z kolumny pierwszej, wyrażenie z kolumny drugiej.
+
+.Dodatkowe informacje
+Aby nie analizować istniejącej struktury plików sugerowana nazwa pliku wynikowego powinni zawierać element losowy. Może to być np. `{tłumaczone_wyrażenie_bez_polskich_znaków}_{losowy_ciąg_znaków}.csv`
+
+Losowy ciąg identyfikator można uzyskać poprzez `java.util.UUID.randomUUID()`, a następnie zamienić go na ciąg znaków metodą `toString()`.
+
+<<<
+
+== Zadanie 8 - zapis do pliku XML
+
+W kolejnym kroku otrzymany zestaw tłumaczeń będziemy zapisywać do pliku XML. Plik powinien mieć strukturę jak na przykładzie poniżej.
+
+[source, xml]
+----
+<entry>
+	<word>{słowo tłumaczne}</word>
+	<date>{data i godzina tłumczenia}</date>
+	<url>{wywołany adres url}</url>
+	<translations>
+		<translation>
+			<from>{słowo z lewej kolumny}</from>
+			<to>{słowo z prawej kolumny}</to>
+		</translation>
+	</translations>
+</entry>
+----
+
+W tym celu, wprowadzimy zmienną konfiguracyjną która określa sposób zapisu do pliku. Będziemy ją ustawiać przy użyciu komendy `set output {XML|CSV}`. Zmienna ta będzie zapamiętywana podczas sesji z aplikacją. Domyślną wartością pozostaje CSV. 
+
+<<<
+
+== Zadanie 9 - system budujący Maven
+
+W poprzednim zadaniu wykorzystaliśmy domyślną bibliotekę platformy Java to operowania na plikach XML. Nie należy ona niestety od najwygodniejszych. W kolejnych ćwiczeniach postaramy się ją zastąpić lepszym rozwiązaniem. Aby jednak tego dokonać, poprzez użycie dodatkowej zewnętrznej biblioteki, należałoby się zastanowić nad wprowadzeniem dodatkowego narzędzia zarządzającego. 
+
+Najpopularniejszym narzędziem do zarządzania procesem budowania aplikacji w ekosystemie Java jest Maven. W poniższym zadaniu przerobimy nasz projekt tak aby używał Apache Maven.
+
+.Dodatkowe informacje
+Kroki które należy wykonać to 
+* utworzenie (lub wygenerowanie) odpowiedniego pliku _pom.xml_
+* przeniesienie źródeł aplikacji (plików `*.java`) do katalogu `src/main/java`
+* przeniesienie wszystkich pozostałych plików (np. z danymi) do katalogu `src/main/resources`
+
+== Zadanie 10 - zapis do pliku w formacie JSON
+
+Aby zapisywać wynik działania programu w formacie JSON, należy przedsięwziąć dwa dodatkowe kroki:
+
+* Dodać opcję konfiguracyjną, umożliwiającą zapisanie pliku JSON (`set output JSON`)
+* Dodać zależność do projektu obsługującą zapis w formacie JSON. 
+
+.Dodatkowe informacje
+Do zapisu plików JSON możesz użyć biblioteki _GSON_. Zdefiniuj ją jako zależność w pliki `pom.xml` w następujący sposób:
+
+[source, xml]
+----
+<dependency>
+    <groupId>com.google.code.gson</groupId>
+    <artifactId>gson</artifactId>
+    <version>2.3.1</version>
+</dependency>
+----

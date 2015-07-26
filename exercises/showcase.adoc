@@ -1,0 +1,3 @@
+== Showcase
+
+Poniższy zestaw pojęć i zagadnienień należy poruszyć podczas pierwszej prezentacji platformy Java podczas szkolenia. 
