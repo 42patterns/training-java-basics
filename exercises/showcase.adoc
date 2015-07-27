@@ -1,3 +1,184 @@
 == Showcase
 
 Poniższy zestaw pojęć i zagadnienień należy poruszyć podczas pierwszej prezentacji platformy Java podczas szkolenia. 
+
+== Słowa kluczowe
+
+*Zastrzeżone:* `continue new switch default if synchronized do goto private this break implements protected throw super while`
+
+* Cyfry – m. in. 0 - 9
+* Litery:
+** alfabet łaciński
+** litery duże i małe
+** litery z innych alfabetów
+** inne znaki (np. _ i €)
+* Java rozróżnia duże i małe litery alfabetu łacińskiego oraz te same litery pochodzące z różnych alfabetów
+
+== Komentarze 
+
+* Blokowe
+* Liniowe
+
+[source, java]
+.JavaDoc
+----
+/**
+* Oblicza cenę biletu
+* @param cl wybrana klasa
+* @param km odleglosc [km]
+* @param zn zniżka
+* @return cena 
+*/
+public double liczCene (int kl, double km, int zn) {
+}
+----
+
+== Typy
+
+(Prawie) wszystko jest obiektem
+
+*Prymitywy* `boolean char byte short int long float double` + 
+*Typy numeryczne mają ściśle określony niezmienny rozmiar!*
+
+* byte - 1 bajt
+* short - 2
+* int / float - 4
+* long / double - 8
+
+== Literały
+
+* Napis reprezentujący wartość wpisaną w kod programu
+* 6 rodzajów literałów: +
+`liczby całkowite, rzeczywiste, literały logiczne, null, znakowe, napisowe`
+* Zapis wartości (liczbowej, tekstowej, logicznej) w danym miejscu programu
+* `l` i `d` na końcu `long` i `double`
+* char `'m'` lub `'\u024a'`
+* `typ zmienna = wartość`. Typ to może być tablica, klasa, interfejs
+** Wartościami zmiennych tego typu są referencje, (odnośniki) do obiektów lub null
+
+[source, java]
+----
+class Main {
+   public static void main(String[]args) {
+      Object object1; // Referencja samodzielna, bez inicjalizacji
+      Object object2 = new Object(); // Referencja zainicjalizowana
+      //System.out.println(object1.toString());
+      System.out.println(object2.toString());
+   }
+}
+----
+
+* nazwenictwo: `_name`, `name17`, `NaMe`
+** nie może zaczynać się o cyfry lub być słowem zastrzeżonym
+
+== Operatory
+
+* plus minus
+* mniejszy większy
+* ==
+* !=
+* !  negacja 
+* &  koniunkcja bitowa, zachłanna
+* &&  koniunkcja  
+* |  alternatywa bitowa, zachłanna
+* || alternatywa
+* ˆ  alternatywa wykluczająca  
+
+== Przypisane
+
+.Typy proste
+* Skopiowanie wartości zmienna2 do zmienna1
+** Późniejsza modyfikacja zmienna2 nie wpływa na wartość zmienna1
+
+.Typy referencyjne
+* Skopiowanie do zmienna1 referencji do obiektu wskazywanego przez zmienna2
+* Obie zmienne wskazują wtedy na ten sam obiekt
+* Modyfikacja obiektu wskazywanego przez zmienna2 powoduje modyfikacje obiektu wskazywanego przez zmienna1
+
+.Rzutowanie
+Automatyczna konwersja typów lub wymuszona przez programistę
+
+== Pierwsza aplikacja
+
+[source, java]
+----
+public class Application {
+   public static void main(String[] args) {
+      System.out.println("System zakupu biletow. " + 
+      	"\nWitamy i gratulujemy dobrego wyboru.");
+      System.out.println("Zapraszamy do korzystania!");
+   }
+}
+----
+
+* Wyświetlanie napisów
+* kompulacja `javac Application.java` + `java Application`
+
+== Tablice
+
+[source, java]
+----
+liczby = new int[10];
+dane = new double[15][20];
+
+String[]airport = {"Warszawa", "Paryż", "Berlin",
+                  "Marsylia", "Rzym", "Londyn"};
+----
+
+
+* Dostęp do elementu tablicy `zmienna[nrIndeksu]`
+* Rozmiar tablicy `zmienna.length`
+* Elementy tablicy numerujemy od zera
+* Przy tworzeniu tablicy bez podawania jej elementów, każdy element otrzymuje wartość
+** 0 gdy elementy typu liczbowego
+** false gdy elementy typu logicznego
+** null gdy elementy typu obiektowego
+* `ArrayOutOfBoundsException`
+
+.Tablice wielowymiarowe
+[source, java]
+----
+int[][]tab = {{ 2, 4, 6 },
+              { 100, 5 }};
+----
+
+== Instrukcje sterujące
+
+* `if while do-while for switch-case`
+
+* Możliwość zastosowania etykiet przed iteracją: +
+`nazwaEtykiety: +
+//iteracja`
+* Brak polecenia goto do przerywania pętli
+** `break {etykieta}`  – wyjście z pętli bez wykonania pozostałych instrukcji
+** `continue {etykieta}` – przerwanie aktualnej iteracji i przejście na początek kolejnej
+** Ogólnie jednak nie zaleca się nadużywania takiej konstrukcji
+* Nie można zadeklarować zmiennych o tej samej nazwie w różnych blokach
+
+[source, java]
+----
+int number = 7;
+Switch (number){
+   case 1:
+      System.out.println("liczba = 1");
+      break;
+   case 7:
+      System.out.println("liczba = 7");
+      break;
+   default:
+      System.out.println("liczba różna od 1 i od 7");
+   break;
+}
+----
+* Jeśli w kodzie pominiemy `break`; to zostaną wykonane wszystkie operacje występujące w kolejnych przypadkach do końca lub do momentu pojawienia się słowa `break`;
+
+* `for`, `while`, `do`
+* operator logiczny `wyrażenieLogiczne ? zmienna1 : zmienna2`
+
+== final i static
+
+* stałe deklarowane są jako zmienne z modyfikatorem final 
+* można przekształcić zmienną w stałą używając w deklaracji słowa kluczowego final
+* static oznacza, że dane pole lub metoda są wspólne dla wszystkich obiektów danej klasy
+
+
