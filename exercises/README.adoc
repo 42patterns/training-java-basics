@@ -40,6 +40,11 @@ W aplikacji z zadania pierwszego dodaj obsługę komend, tzn. wprowadź znak zac
 
 Program docelowo ma odczytywać dane z pliku, dodaj więc komendę `read {nazwa_pliku}`. Dla tej komendy system powinien wyświetlić na ekran komunikat `Odczyt z pliku {nazwa_pliku}.`
 
+Aby zakończyć działanie programu należy wydać komendę `exit`.
+
+.Dodatkowe informacje
+W przypadku komendy `read file.txt` linijkę można podzielić na mniejsze tokeny metodą `String.split()`, które rodzieli linię na tablicę zgodnie z podanym wyrażeniem (np. spacją ' ').
+
 <<<
 
 == Zadanie 3 - operacje na ciągach znaków
