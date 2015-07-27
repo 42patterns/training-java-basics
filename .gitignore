@@ -1,3 +1,9 @@
-RemoteSystemsTempFiles
-.metadata
 *.html
+
+## Eclipse project files
+RemoteSystemsTempFiles
+.recommenders
+.metadata
+bin
+.classpath
+.project
