@@ -49,9 +49,9 @@ W przypadku komendy `read file.txt` linijkę można podzielić na mniejsze token
 
 == Zadanie 3 - operacje na ciągach znaków
 
-Program będzie miał możliwość odczytu plików w więcej niż w pojedynczym formacie. Początkowo będzie to zwykły plik tekstowy (TXT) ale docelowo będziemy wprowadzać kolejne formaty (XML, CSV, JSON). Niemniej, format tekstowy będzie formatem domyślnym.
+Program będzie miał możliwość odczytu plików w więcej niż jednym formacie. Początkowo będzie to zwykły plik tekstowy (TXT) ale docelowo będziemy wprowadzać kolejne formaty (XML, CSV, JSON). Niemniej, format tekstowy będzie formatem domyślnym.
 
-Dodatkowo zaimplementuj walidację; sprawdzenie poprawności nazwy pliku (liczby oraz litery oraz trzy znakowe rozszerzenie). Jeżeli wpisana nazwa pliku nie będzie posiadała rozszerzenia - należy użyć domyślnego rozszerzenie `.txt`. 
+W ramach poniższego zadania zaimplementuj walidację: sprawdzenie poprawności nazwy pliku (liczby oraz litery oraz maksymalnie cztery znaki rozszerzenia). Jeżeli wpisana nazwa pliku nie będzie posiadała rozszerzenia - należy użyć domyślnego rozszerzenie `.txt`. 
 
 <<<
 
