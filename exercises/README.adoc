@@ -1,4 +1,4 @@
-= Podstawy Javy - ćwiczenia
+	= Podstawy Javy - ćwiczenia
 
 Celem zadań będzie napisanie aplikacji która pobiera tłumaczenia słów zapisanych w pliku tekstowym, a następnie na nich operuje (wyświetla na ekranie, zapisuje do pliku itd). Wraz z rozwojem aplikacji (a zarazem poznawaniem kolejnych elementów platformy Java) w kolejnych ćwiczeniach będą dodawane kolejne funkcjonalności. 
 
@@ -66,9 +66,24 @@ Do operacji na plikach wykorzystaj klasę `File`, np. sprawdzenie czy plik istni
 
 [source,java]
 ----
-File f = new File("{nazwa_pliku");
+File f = new File("{nazwa_pliku}");
 f.exists();
 ----
+
+Plik należy utworzyć samodzielnie w odpowiedniej lokalizacji. Zawartość pliku może być następująca:
+
+[source, txt]
+.words.txt
+----
+dom
+biegun
+policjant
+zamek
+film
+kino
+----
+
+Odczytu zawartości pliku możemy dokonać znaną z poprzednich zadań klasą `Scanner`.
 
 <<<
 

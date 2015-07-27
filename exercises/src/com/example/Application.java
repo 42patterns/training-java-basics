@@ -1,5 +1,6 @@
 package com.example;
 
+import java.io.File;
 import java.util.Scanner;
 
 public class Application {
@@ -10,7 +11,7 @@ public class Application {
 		
 		boolean run = true;
 		while (run) {
-			System.out.print("{ ~ } » ");
+			System.out.print("{ ~ } Â» ");
 			String line = scanner.nextLine();
 			
 			if ("exit".equals(line)) {
@@ -26,7 +27,7 @@ public class Application {
 				
 				if (!filename.endsWith("txt") && !filename.endsWith("csv")
 						&& !filename.endsWith("xml") && !filename.endsWith("json")) {
-					System.out.println("Brak rozszerzenia. U¿ywam domyœlnego: txt");
+					System.out.println("Brak rozszerzenia. UÅ¼ywam domyÅ›lnego: txt");
 					filename = filename + ".txt";
 				}
 				
@@ -35,7 +36,18 @@ public class Application {
 					continue;
 				}
 								
+				File f = new File(filename);
+				if (!f.exists()) {
+					System.out.println("Plik [" +filename+ "] nie istnieje.");
+					continue;					
+				}
+				
 				System.out.println("Odczyt z pliku: " + filename);
+				
+				Scanner fs = new Scanner(f);
+				while (fs.hasNext()) {
+					System.out.println(fs.nextLine());
+				}
 			}
 		}
 		
