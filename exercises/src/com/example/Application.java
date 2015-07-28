@@ -1,11 +1,15 @@
 package com.example;
 
 import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Application {
 
 	public static void main(String[] args) throws Exception {
+		List<String> words = new ArrayList<>();
 
 		Scanner scanner = new Scanner(System.in);
 		
@@ -46,7 +50,22 @@ public class Application {
 				
 				Scanner fs = new Scanner(f);
 				while (fs.hasNext()) {
-					System.out.println(fs.nextLine());
+					String word = fs.nextLine();
+					System.out.println("[" + words.size() + "] " + word);
+					words.add(word);
+				}
+			} else if (line.startsWith("translate")) {
+				String[] l = line.split(" ");
+				String word = words.get(Integer.valueOf(l[1]));
+				
+				System.out.println("Tłumaczenie dla słowa: " + word);
+				
+				URL url = new URL("http://www.dict.pl/dict?words=&lang=PL&word="+word);
+				Scanner s = new Scanner(url.openStream());
+				
+				while(s.hasNext()) {
+					String string = s.nextLine();
+					System.out.println(string);
 				}
 			}
 		}

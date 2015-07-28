@@ -1,4 +1,4 @@
-	= Podstawy Javy - ćwiczenia
+= Podstawy Javy - ćwiczenia
 
 Celem zadań będzie napisanie aplikacji która pobiera tłumaczenia słów zapisanych w pliku tekstowym, a następnie na nich operuje (wyświetla na ekranie, zapisuje do pliku itd). Wraz z rozwojem aplikacji (a zarazem poznawaniem kolejnych elementów platformy Java) w kolejnych ćwiczeniach będą dodawane kolejne funkcjonalności. 
 
