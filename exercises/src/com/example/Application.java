@@ -6,6 +6,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Application {
 
@@ -83,9 +85,20 @@ public class Application {
 				URL url = new URL("http://www.dict.pl/dict?words=&lang=PL&word="+word);
 				Scanner s = new Scanner(url.openStream());
 				
+				Pattern pat = Pattern.compile(".*<a href=\"dict\\?words?=(.*)&lang.*");
+				boolean polishWord = true;
 				while(s.hasNext()) {
 					String string = s.nextLine();
-					System.out.println(string);
+					Matcher matcher = pat.matcher(string);
+					if (matcher.find()) {
+						if (polishWord) {
+							System.out.print(matcher.group(matcher.groupCount()) + " - ");
+							polishWord = false;
+						} else {
+							System.out.println(matcher.group(matcher.groupCount()));
+							polishWord = true;
+						}
+					}	
 				}
 			}
 		}
