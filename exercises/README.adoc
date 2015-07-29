@@ -104,16 +104,16 @@ Do zewnętrznego systemu odwołujemy się poprzez klasę `URL` i odpowiednio obs
 == Zadanie 6 - wyrażenia regularne
 
 W naszej aplikacji powinniśmy móc posługiwać się _wildcardami_ przy okazji podawania nazwy pliku. 
-Tzn, że powinna być możliwa komenda `read plik_*.txt` co spowodowałoby odczytanie zawartości wszystkich plików.
+Tzn, że powinna być możliwa komenda `read word*.txt` co spowodowałoby odczytanie zawartości wszystkich plików zaczynających się od `word` z rozszerzeniem `.txt`.
 
 .Dodatkowe informacje
 `Wildcard` to może być zarówno znak `?` - zastępujący pojedynczy znak w nazwie pliku, jak i `*` będący substytutem ciągu znaków o dowolnej długości. Wykorzystaj do tego właśnie wyrażenia regularne.
 
-W celu znalezienia odpowiednich plików, przefiltuj listę wszystkich plików w katalogu za pomocą odpowiedniego wyrażenia regularnego. 
+W celu znalezienia odpowiednich plików, przefiltuj listę wszystkich plików w katalogu za pomocą odpowiedniego wyrażenia regularnego, iterując po liście plików w bieżącym katalogu. 
 
 [source, java]
 ----
-File dir = new File("katalog");
+File dir = new File("./");
 File[] fileList = dir.listFile();
 ----
 

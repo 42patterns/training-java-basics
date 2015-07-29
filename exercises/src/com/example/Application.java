@@ -1,6 +1,7 @@
 package com.example;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,24 +36,43 @@ public class Application {
 					filename = filename + ".txt";
 				}
 				
-				if (!filename.matches("[a-zA-Z0-9]+\\.[a-z]{1,4}")) {
+				if (!filename.matches("[a-zA-Z0-9\\*\\?]+\\.[a-z]{1,4}")) {
 					System.out.println("Nieporawna nazwa pliku [" +filename+ "]");
 					continue;
 				}
-								
-				File f = new File(filename);
-				if (!f.exists()) {
-					System.out.println("Plik [" +filename+ "] nie istnieje.");
-					continue;					
+				
+				File[] listFiles;
+				if (filename.contains("*") || filename.contains("?")) {
+					final String finalFileName = filename;
+					File dir = new File("./");
+					listFiles = dir.listFiles(new FileFilter() {
+						
+						public boolean accept(File pathname) {
+							String wildcardFilename = finalFileName.replace("?", ".")
+									.replace("*", ".*");
+							return (pathname.isFile() &&
+									pathname.getName().matches(wildcardFilename));
+						}
+					});
+				} else {
+					listFiles = new File[] { new File(filename) };
 				}
 				
-				System.out.println("Odczyt z pliku: " + filename);
-				
-				Scanner fs = new Scanner(f);
-				while (fs.hasNext()) {
-					String word = fs.nextLine();
-					System.out.println("[" + words.size() + "] " + word);
-					words.add(word);
+				words.clear();
+				for (File f: listFiles) {
+					if (!f.exists()) {
+						System.out.println("Plik [" +filename+ "] nie istnieje.");
+						continue;					
+					}
+					
+					System.out.println("Odczyt z pliku: " + f.getName());
+					
+					Scanner fs = new Scanner(f);
+					while (fs.hasNext()) {
+						String word = fs.nextLine();
+						System.out.println("[" + words.size() + "] " + word);
+						words.add(word);
+					}					
 				}
 			} else if (line.startsWith("translate")) {
 				String[] l = line.split(" ");
