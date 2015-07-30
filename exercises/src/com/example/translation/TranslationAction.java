@@ -14,7 +14,7 @@ public class TranslationAction extends Action {
 	public TranslationAction(ApplicationState app) {
 		super(app);
 	}
-
+	
 	@Override
 	public ApplicationState execute() {
 		String word = app.getWords().get(Integer.valueOf(app.getArgument()));

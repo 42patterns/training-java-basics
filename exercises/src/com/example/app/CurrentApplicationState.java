@@ -32,8 +32,6 @@ public class CurrentApplicationState implements ApplicationState {
 		this.words = app.getWords();
 	}
 	
-	
-	
 	@Override
 	public String getCommand() {
 		return command;
