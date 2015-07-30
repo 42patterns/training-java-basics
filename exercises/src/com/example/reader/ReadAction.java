@@ -1,7 +1,6 @@
 package com.example.reader;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +9,8 @@ import java.util.Scanner;
 import com.example.Action;
 import com.example.app.ApplicationState;
 import com.example.app.CurrentApplicationState;
+import com.example.reader.files.SourceList;
+import com.example.reader.files.SourceListFactory;
 
 public class ReadAction extends Action {
 
@@ -20,22 +21,9 @@ public class ReadAction extends Action {
 	@Override
 	public ApplicationState execute() {
 		String filename = app.getArgument();
-		File[] listFiles;
-		if (filename.contains("*") || filename.contains("?")) {
-			final String finalFileName = filename;
-			File dir = new File("./");
-			listFiles = dir.listFiles(new FileFilter() {
-				
-				public boolean accept(File pathname) {
-					String wildcardFilename = finalFileName.replace("?", ".")
-							.replace("*", ".*");
-					return (pathname.isFile() &&
-							pathname.getName().matches(wildcardFilename));
-				}
-			});
-		} else {
-			listFiles = new File[] { new File(filename) };
-		}
+		
+		SourceList source = SourceListFactory.create(filename);
+		File[] listFiles = source.getFiles();
 		
 		List<String> words = new ArrayList<>();
 		for (File f: listFiles) {
