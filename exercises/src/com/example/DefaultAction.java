@@ -13,4 +13,9 @@ public class DefaultAction extends Action {
 		return app;
 	}
 
+	@Override
+	public boolean isValid() {
+		return true;
+	}
+
 }

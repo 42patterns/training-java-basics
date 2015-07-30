@@ -10,5 +10,5 @@ public abstract class Action {
 	}
 	
 	public abstract ApplicationState execute();
-	
+	public abstract boolean isValid();
 }

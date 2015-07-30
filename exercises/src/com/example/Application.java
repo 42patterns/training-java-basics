@@ -16,7 +16,10 @@ public class Application {
 		while (app.isRunning()) {
 			System.out.print("{ ~ } » ");
 			app = new CurrentApplicationState(app, scanner.nextLine());
-			app = ActionFactory.getAction(app).execute();
+			Action action = ActionFactory.getAction(app);
+			if (action.isValid()) {
+				app = action.execute();
+			}
 		}
 		
 		scanner.close();

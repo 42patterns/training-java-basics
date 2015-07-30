@@ -43,4 +43,24 @@ public class TranslationAction extends Action {
 		return app;
 	}
 
+	@Override
+	public boolean isValid() {
+		if (!app.getArgument().matches("\\d+")) {
+			System.out.println("Argument to nie liczba.");
+			return false;
+		}
+		
+		if (app.getWords().isEmpty()) {
+			System.out.println("Nie załadowano słów do tłumaczenia.");
+			return false;
+		}
+		
+		if (Integer.valueOf(app.getArgument()) > app.getWords().size()) {
+			System.out.println("Zbyt wysoki index.");
+			return false;
+		}
+		
+		return true;
+	}
+
 }

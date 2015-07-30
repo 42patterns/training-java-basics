@@ -15,4 +15,9 @@ public class ExitAction extends Action {
 		return new CurrentApplicationState(app, false);
 	}
 
+	@Override
+	public boolean isValid() {
+		return true;
+	}
+
 }
