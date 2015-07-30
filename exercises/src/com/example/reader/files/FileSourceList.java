@@ -12,7 +12,12 @@ public class FileSourceList implements SourceList {
 
 	@Override
 	public File[] getFiles() {
-		return new File[] { new File(filename) };
+		File f = new File(filename);
+		if (f.exists()) {
+			return new File[] { f };
+		}
+		
+		return new File[] {};
 	}
 
 }

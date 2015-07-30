@@ -27,13 +27,7 @@ public class ReadAction extends Action {
 		
 		List<String> words = new ArrayList<>();
 		for (File f: listFiles) {
-			if (!f.exists()) {
-				System.out.println("Plik [" +filename+ "] nie istnieje.");
-				continue;					
-			}
-			
 			System.out.println("Odczyt z pliku: " + f.getName());
-			
 			try (Scanner fs = new Scanner(f)) {
 				while (fs.hasNext()) {
 					String word = fs.nextLine();
