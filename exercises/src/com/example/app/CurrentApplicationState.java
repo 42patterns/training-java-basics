@@ -9,18 +9,30 @@ public class CurrentApplicationState implements ApplicationState {
 	private String command;
 	private String argument;
 	private List<String> words = Collections.emptyList();
+	private Boolean isRunning;
 	
 	public CurrentApplicationState(ApplicationState app, String nextLine) {
 		this.command = nextLine.split(" ")[0];
 		this.argument = nextLine.substring(this.command.length()).trim();
+		this.isRunning = app.isRunning();
 		this.words = app.getWords();
 	}
 
 	public CurrentApplicationState(ApplicationState app, List<String> words) {
 		this.command = app.getCommand();
 		this.argument =  app.getArgument();
+		this.isRunning = app.isRunning();
 		this.words = words;
 	}
+	
+	public CurrentApplicationState(ApplicationState app, Boolean isRunning) {
+		this.command = app.getCommand();
+		this.argument =  app.getArgument();
+		this.isRunning = isRunning;
+		this.words = app.getWords();
+	}
+	
+	
 	
 	@Override
 	public String getCommand() {
@@ -38,8 +50,14 @@ public class CurrentApplicationState implements ApplicationState {
 	}
 
 	@Override
+	public Boolean isRunning() {
+		return isRunning;
+	}
+
+	@Override
 	public String toString() {
-		return "ApplicationState [command=" + command + ", argument=" + argument + ", words=" + words.size() + "]";
+		return "CurrentApplicationState [command=" + command + ", argument=" + argument + ", words=" + words.size()
+				+ ", isRunning=" + isRunning + "]";
 	}
 	
 	

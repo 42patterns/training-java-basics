@@ -20,4 +20,9 @@ public class EmptyApplicationState implements ApplicationState {
 		return Collections.emptyList();
 	}
 
+	@Override
+	public Boolean isRunning() {
+		return true;
+	}
+
 }

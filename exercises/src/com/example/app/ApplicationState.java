@@ -9,5 +9,7 @@ public interface ApplicationState {
 	String getArgument();
 
 	List<String> getWords();
+	
+	Boolean isRunning();
 
 }
