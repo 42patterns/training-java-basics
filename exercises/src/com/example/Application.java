@@ -16,13 +16,12 @@ public class Application {
 
 		Scanner scanner = new Scanner(System.in);
 		
-		boolean run = true;
-		while (run) {
+		while (true) {
 			System.out.print("{ ~ } » ");
 			String line = scanner.nextLine();
 			
 			if ("exit".equals(line)) {
-				run = false;
+				break;
 			} else if (line != null && line.startsWith("read")) {
 				String[] l = line.split(" ");
 				
