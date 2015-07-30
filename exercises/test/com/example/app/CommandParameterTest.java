@@ -9,7 +9,7 @@ public class CommandParameterTest {
 
 	@Test
 	public void should_parse_no_argument_string() {
-		CommandParameter p = new CommandParameter("exit    ");
+		ApplicationState p = new CurrentApplicationState(new EmptyApplicationState(), "exit    ");
 		
 		assertThat(p.getCommand(), is("exit"));
 		assertThat(p.getArgument(), is(""));
@@ -17,7 +17,7 @@ public class CommandParameterTest {
 	
 	@Test
 	public void should_parse_argument_string() {
-		CommandParameter p = new CommandParameter("read words.txt");
+		ApplicationState p = new CurrentApplicationState(new EmptyApplicationState(), "read words.txt");
 		
 		assertThat(p.getCommand(), is("read"));
 		assertThat(p.getArgument(), is("words.txt"));
@@ -25,7 +25,7 @@ public class CommandParameterTest {
 	
 	@Test
 	public void should_parse_no_argument_string_with_whitespaces() {
-		CommandParameter p = new CommandParameter("exit    ");
+		ApplicationState p = new CurrentApplicationState(new EmptyApplicationState(), "exit    ");
 		
 		assertThat(p.getCommand(), is("exit"));
 		assertThat(p.getArgument(), is(""));

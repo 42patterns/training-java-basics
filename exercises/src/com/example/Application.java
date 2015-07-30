@@ -7,44 +7,45 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.example.app.CommandParameter;
+import com.example.app.CurrentApplicationState;
+import com.example.app.EmptyApplicationState;
+import com.example.app.ApplicationState;
 
 public class Application {
 
 	public static void main(String[] args) throws Exception {
-		List<String> words = Collections.emptyList();
 
+		ApplicationState app = new EmptyApplicationState();
 		Scanner scanner = new Scanner(System.in);
 		
 		while (true) {
-			System.out.print("{ ~ } » ");
-			
-			CommandParameter cp = new CommandParameter(scanner.nextLine());
-			if ("exit".equals(cp.getCommand())) {
+			if ("exit".equals(app.getCommand())) {
 				break;
-			} else if ("read".equals(cp.getCommand())) {
-				words = readFileAction(cp);
-			} else if ("translate".equals(cp.getCommand())) {				
-				translateWordAction(words, cp);
+			} else if ("read".equals(app.getCommand())) {
+				app = readFileAction(app);
+			} else if ("translate".equals(app.getCommand())) {				
+				translateWordAction(app);
 			} 
+			
+			System.out.print("{ ~ } » ");
+			app = new CurrentApplicationState(app, scanner.nextLine());			
 		}
 		
 		scanner.close();
 		System.out.println("Koniec...");
 	}
 
-	private static List<String> readFileAction(CommandParameter cp) throws FileNotFoundException {
-		String filename = cp.getArgument();
+	private static ApplicationState readFileAction(ApplicationState app) throws FileNotFoundException {
+		String filename = app.getArgument();
 		
 		if (filename.isEmpty()) {
 			System.out.println("Niepoprawna nazwa pliku");
-			return Collections.emptyList();
+			return app;
 		}
 		
 		if (!filename.endsWith("txt") && !filename.endsWith("csv")
@@ -55,7 +56,7 @@ public class Application {
 		
 		if (!filename.matches("[a-zA-Z0-9\\*\\?]+\\.[a-z]{1,4}")) {
 			System.out.println("Nieporawna nazwa pliku [" +filename+ "]");
-			return Collections.emptyList();
+			return app;
 		}
 		
 		File[] listFiles;
@@ -92,13 +93,12 @@ public class Application {
 				}					
 			}
 		}
-		
-		return words;
+		return new CurrentApplicationState(app, words);
 	}
 
-	private static void translateWordAction(List<String> words, CommandParameter cp)
+	private static void translateWordAction(ApplicationState app)
 			throws MalformedURLException, IOException {
-		String word = words.get(Integer.valueOf(cp.getArgument()));
+		String word = app.getWords().get(Integer.valueOf(app.getArgument()));
 		
 		System.out.println("Tłumaczenie dla słowa: " + word);
 		
