@@ -9,6 +9,8 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.example.app.CommandParameter;
+
 public class Application {
 
 	public static void main(String[] args) throws Exception {
@@ -18,18 +20,17 @@ public class Application {
 		
 		while (true) {
 			System.out.print("{ ~ } » ");
-			String line = scanner.nextLine();
 			
-			if ("exit".equals(line)) {
+			CommandParameter cp = new CommandParameter(scanner.nextLine());
+			if ("exit".equals(cp.getCommand())) {
 				break;
-			} else if (line != null && line.startsWith("read")) {
-				String[] l = line.split(" ");
+			} else if ("read".equals(cp.getCommand())) {
+				String filename = cp.getArgument();
 				
-				if (l.length == 1) {
+				if (filename.isEmpty()) {
 					System.out.println("Niepoprawna nazwa pliku");
 					continue;
 				}
-				String filename = l[1];
 				
 				if (!filename.endsWith("txt") && !filename.endsWith("csv")
 						&& !filename.endsWith("xml") && !filename.endsWith("json")) {
@@ -75,9 +76,8 @@ public class Application {
 						words.add(word);
 					}					
 				}
-			} else if (line.startsWith("translate")) {
-				String[] l = line.split(" ");
-				String word = words.get(Integer.valueOf(l[1]));
+			} else if ("translate".equals(cp.getCommand())) {				
+				String word = words.get(Integer.valueOf(cp.getArgument()));
 				
 				System.out.println("Tłumaczenie dla słowa: " + word);
 				
