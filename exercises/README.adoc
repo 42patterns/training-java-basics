@@ -135,7 +135,7 @@ Wyrażenie regularne wyłuskujące pojedyncze słowo z tabeli tłumaczeń może 
 Pobrany zestaw tłumaczeń zapis do pliku CSV o następującej strukturze: wyrażenie z kolumny pierwszej, wyrażenie z kolumny drugiej.
 
 .Dodatkowe informacje
-Aby nie analizować istniejącej struktury plików sugerowana nazwa pliku wynikowego powinni zawierać element losowy. Może to być np. `{tłumaczone_wyrażenie_bez_polskich_znaków}_{losowy_ciąg_znaków}.csv`
+Aby nie analizować istniejącej struktury plików sugerowana nazwa pliku wynikowego powinni zawierać element losowy. Może to być np. `{tłumaczone_wyrażenie}_{losowy_ciąg_znaków}.csv`
 
 Losowy ciąg identyfikator można uzyskać poprzez `java.util.UUID.randomUUID()`, a następnie zamienić go na ciąg znaków metodą `toString()`.
 
@@ -143,24 +143,24 @@ Losowy ciąg identyfikator można uzyskać poprzez `java.util.UUID.randomUUID()`
 
 == Zadanie 8 - zapis do pliku XML
 
-W kolejnym kroku otrzymany zestaw tłumaczeń będziemy zapisywać do pliku XML. Plik powinien mieć strukturę jak na przykładzie poniżej.
+W kolejnym kroku otrzymany zestaw tłumaczeń będziemy zapisywać do pliku XML. Na początek nie ma konieczności przejmować się dokładną strukturą pliku, należy zadbać jedynie o to aby plik zawierał następujące dane:
 
-[source, xml]
-----
-<entry>
-	<word>{słowo tłumaczne}</word>
-	<date>{data i godzina tłumczenia}</date>
-	<url>{wywołany adres url}</url>
-	<translations>
-		<translation>
-			<from>{słowo z lewej kolumny}</from>
-			<to>{słowo z prawej kolumny}</to>
-		</translation>
-	</translations>
-</entry>
-----
+* słowo do przetłumaczenia
+* wywołany URL
+* datę przeprowadzonego tłumaczenia (w postaci zrozumiałej przez człowieka)
+* tablicę przetłumaczonych słów
 
 W tym celu, wprowadzimy zmienną konfiguracyjną która określa sposób zapisu do pliku. Będziemy ją ustawiać przy użyciu komendy `set output {XML|CSV}`. Zmienna ta będzie zapamiętywana podczas sesji z aplikacją. Domyślną wartością pozostaje CSV. 
+
+.Dodatkowe informacje
+Zapisu to pliku XML możemy dokonać za pomocą dostępnej w Javie klasy `XMLEncoder`. Wynik działania (zapisany XML) nie jest najładniejszy - ale tym zajmiemy się później.
+
+[source, java]
+----
+XMLEncoder e = new XMLEncoder(new FileOutputStream("test.xml"));
+e.writeObject({zapisywany obiekt});
+e.close();
+----
 
 <<<
 
@@ -193,4 +193,45 @@ Do zapisu plików JSON możesz użyć biblioteki _GSON_. Zdefiniuj ją jako zale
     <artifactId>gson</artifactId>
     <version>2.3.1</version>
 </dependency>
+----
+
+Zapis do postaci JSON uzyskamy używająć klasy `Gson`
+
+[source, java]
+----
+Gson gson = new Gson();
+String json = gson.toJson({zapisywany obiekt});
+//.. zapis do pliku
+----
+
+== Zadanie 11 - poprawienie XMLa
+
+Uzyskany przez nas XML (w ćwiczeniu 8) pozostawiał nieco do życzenia (a przynajmniej jego struktura). Aby spróbować uzyskać lepiej sformatowany dokument, posłużmy się bardzo prostą biblioteką `XStream`. Dokładniejszy opis biblioteki znajduje się tutaj; http://www.xml.com/pub/a/2004/08/18/xstream.html
+
+Bibliotekę możemy ją dodać jako zależność Maven
+
+[source, xml]
+----
+<dependency>
+	<groupId>xstream</groupId>
+	<artifactId>xstream</artifactId>
+	<version>1.2.2</version>
+</dependency>
+----
+
+Wynikowy plik XMLowy powinien mieć strukturę możliwie bliską poniższej
+
+[source, xml]
+----
+<entry>
+	<word>{słowo tłumaczne}</word>
+	<date>{data i godzina tłumczenia}</date>
+	<url>{wywołany adres url}</url>
+	<translations>
+		<translation>
+			<polishWord>{słowo z lewej kolumny}</polishWord>
+			<englishWord>{słowo z prawej kolumny}</englishWord>
+		</translation>
+	</translations>
+</entry>
 ----

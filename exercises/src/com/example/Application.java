@@ -100,10 +100,12 @@ public class Application {
 						}
 					}	
 				}
-			}
+			} 
 		}
 		
 		scanner.close();
 		System.out.println("Koniec...");
 	}
+	
 }
+
