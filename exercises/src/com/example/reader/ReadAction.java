@@ -2,8 +2,7 @@ package com.example.reader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 import com.example.Action;
@@ -25,14 +24,13 @@ public class ReadAction extends Action {
 		SourceList source = SourceListFactory.create(filename);
 		File[] listFiles = source.getFiles();
 		
-		List<String> words = new ArrayList<>();
+		LinkedList<String> words = new LinkedList<>();
 		for (File f: listFiles) {
-			System.out.println("Odczyt z pliku: " + f.getName());
 			try (Scanner fs = new Scanner(f)) {
+				System.out.println("Odczyt z pliku: " + f.getName());
 				while (fs.hasNext()) {
-					String word = fs.nextLine();
-					System.out.println("[" + words.size() + "] " + word);
-					words.add(word);
+					words.add(fs.nextLine());
+					System.out.println("[" + (words.size() - 1) + "] " + words.peekLast());
 				}					
 			} catch (FileNotFoundException e) {
 				throw new IllegalStateException(e);
