@@ -3,7 +3,6 @@ package com.example;
 import java.util.Scanner;
 
 import com.example.app.ApplicationState;
-import com.example.app.CurrentApplicationState;
 import com.example.app.EmptyApplicationState;
 
 public class Application {
@@ -15,7 +14,7 @@ public class Application {
 		
 		while (app.isRunning()) {
 			System.out.print("{ ~ } » ");
-			app = new CurrentApplicationState(app, scanner.nextLine());
+			app = app.newState().withNewCommand(scanner.nextLine());
 			Action action = ActionFactory.getAction(app);
 			if (action.isValid()) {
 				app = action.execute();

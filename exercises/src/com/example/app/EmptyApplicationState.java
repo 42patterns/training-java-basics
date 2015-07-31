@@ -25,4 +25,9 @@ public class EmptyApplicationState implements ApplicationState {
 		return true;
 	}
 
+	@Override
+	public StateBuilder newState() {
+		return new StateBuilder().withState(this);
+	}
+
 }

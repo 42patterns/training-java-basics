@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 import com.example.Action;
 import com.example.app.ApplicationState;
-import com.example.app.CurrentApplicationState;
 import com.example.reader.files.SourceList;
 import com.example.reader.files.SourceListFactory;
 
@@ -36,7 +35,7 @@ public class ReadAction extends Action {
 				throw new IllegalStateException(e);
 			}
 		}
-		return new CurrentApplicationState(app, words);
+		return app.newState().withNewWords(words);
 	
 	}
 
@@ -53,7 +52,7 @@ public class ReadAction extends Action {
 				&& !filename.endsWith("xml") && !filename.endsWith("json")) {
 			System.out.println("Brak rozszerzenia. Używam domyślnego: txt");
 			filename = filename + ".txt";
-			this.app = new CurrentApplicationState(app, "read " + filename);			
+			this.app = this.app.newState().withNewCommand("read " + filename); 
 		}
 		
 		if (!filename.matches("[a-zA-Z0-9\\*\\?]+\\.[a-z]{1,4}")) {

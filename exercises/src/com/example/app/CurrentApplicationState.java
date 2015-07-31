@@ -11,27 +11,6 @@ public class CurrentApplicationState implements ApplicationState {
 	private List<String> words = Collections.emptyList();
 	private Boolean isRunning;
 	
-	public CurrentApplicationState(ApplicationState app, String nextLine) {
-		this.command = nextLine.split(" ")[0];
-		this.argument = nextLine.substring(this.command.length()).trim();
-		this.isRunning = app.isRunning();
-		this.words = app.getWords();
-	}
-
-	public CurrentApplicationState(ApplicationState app, List<String> words) {
-		this.command = app.getCommand();
-		this.argument =  app.getArgument();
-		this.isRunning = app.isRunning();
-		this.words = words;
-	}
-	
-	public CurrentApplicationState(ApplicationState app, Boolean isRunning) {
-		this.command = app.getCommand();
-		this.argument =  app.getArgument();
-		this.isRunning = isRunning;
-		this.words = app.getWords();
-	}
-	
 	@Override
 	public String getCommand() {
 		return command;
@@ -57,7 +36,18 @@ public class CurrentApplicationState implements ApplicationState {
 		return "CurrentApplicationState [command=" + command + ", argument=" + argument + ", words=" + words.size()
 				+ ", isRunning=" + isRunning + "]";
 	}
+
+	public StateBuilder newState() {
+		return new StateBuilder().withState(this);
+	}
 	
+	CurrentApplicationState(StateBuilder builder) {
+		this.command = builder.command;
+		this.argument = builder.argument;
+		this.words = builder.words;
+		this.isRunning = builder.isRunning;
+	}
 	
+
 
 }

@@ -11,5 +11,7 @@ public interface ApplicationState {
 	List<String> getWords();
 	
 	Boolean isRunning();
+	
+	StateBuilder newState();
 
 }

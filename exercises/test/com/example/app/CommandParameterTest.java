@@ -1,15 +1,23 @@
 package com.example.app;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+import org.junit.Before;
+import org.junit.Test;
 
 public class CommandParameterTest {
 
+	private ApplicationState baseState;
+	
+	@Before
+	public void setup() {
+		baseState = new EmptyApplicationState();
+	}
+	
 	@Test
 	public void should_parse_no_argument_string() {
-		ApplicationState p = new CurrentApplicationState(new EmptyApplicationState(), "exit    ");
+		ApplicationState p = baseState.newState().withNewCommand("exit");
 		
 		assertThat(p.getCommand(), is("exit"));
 		assertThat(p.getArgument(), is(""));
@@ -17,7 +25,7 @@ public class CommandParameterTest {
 	
 	@Test
 	public void should_parse_argument_string() {
-		ApplicationState p = new CurrentApplicationState(new EmptyApplicationState(), "read words.txt");
+		ApplicationState p = baseState.newState().withNewCommand("read words.txt");
 		
 		assertThat(p.getCommand(), is("read"));
 		assertThat(p.getArgument(), is("words.txt"));
@@ -25,7 +33,7 @@ public class CommandParameterTest {
 	
 	@Test
 	public void should_parse_no_argument_string_with_whitespaces() {
-		ApplicationState p = new CurrentApplicationState(new EmptyApplicationState(), "exit    ");
+		ApplicationState p = baseState.newState().withNewCommand("exit    ");
 		
 		assertThat(p.getCommand(), is("exit"));
 		assertThat(p.getArgument(), is(""));
